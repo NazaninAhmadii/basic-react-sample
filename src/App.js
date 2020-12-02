@@ -1,8 +1,9 @@
 // import React, { useState } from 'react';//this is just for using hook
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person';
 import Radium, { StyleRoot } from 'radium'
+import ErrorBoundary from './ErrorBoundry/ErrorBoundary'
 
 //*****************************************/
 //**********CLASS BASE COMPONENT **********/
@@ -62,17 +63,17 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
-    };
+    // const style = {
+    //   backgroundColor: 'white',
+    //   font: 'inherit',
+    //   border: '1px solid blue',
+    //   padding: '8px',
+    //   cursor: 'pointer',
+    //   ':hover': {
+    //     backgroundColor: 'lightgreen',
+    //     color: 'black'
+    //   }
+    // };
 
     let persons = null;
 
@@ -80,12 +81,12 @@ class App extends Component {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person
+            return <ErrorBoundary key={person.id}><Person
               click={() => this.deletePersonHandler(index)}
               change={(event) => this.nameChangeHandler(event, person.id)}
               name={person.name}
               age={person.age}
-              key={person.id} />
+            /></ErrorBoundary>
           })}
           {/* <Person // we can use mapping through array instead of it
             name={this.state.persons[0].name} 
@@ -101,20 +102,20 @@ class App extends Component {
         </div>
       );
 
-      style.backgroundColor = 'red'
-      style[':hover'] = {
-        backgroundColor: 'lightred',
-        color: 'black'
-      }
+      // style.backgroundColor = 'red'
+      // style[':hover'] = {
+      //   backgroundColor: 'lightred',
+      //   color: 'black'
+      // }
     }
 
     return (
       <StyleRoot>
-        <div className="App">
+        <div className={classes.App}>
           <h1>Hi, I am a React App!</h1>
           <p>This is really working</p>
           <button
-            style={style}
+            className={classes.Button}
             onClick={() => this.togglePersonsHandler()}>Switch Name</button>
           {persons}
           {/* {
