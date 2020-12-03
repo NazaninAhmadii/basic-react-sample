@@ -1,9 +1,10 @@
 // import React, { useState } from 'react';//this is just for using hook
 import React, { Component } from 'react';
 import classes from './App.css';
-import Person from './Person/Person';
+import Cockpit from '../components/Cockpit/Cockpit'
+import Persons from '../components/Persons/Persons'
 import Radium, { StyleRoot } from 'radium'
-import ErrorBoundary from './ErrorBoundry/ErrorBoundary'
+
 
 //*****************************************/
 //**********CLASS BASE COMPONENT **********/
@@ -19,16 +20,6 @@ class App extends Component {
     showPersons: false
   }
 
-  // switchNameHandler = (newName) =>{
-  //   // console.log("Was clicked!");
-  //   //DON'T DO THIS: personsState.persons[0].name ="Nazanin";
-  //   this.setState({persons:  [
-  //     {name: newName, age: 28},
-  //     {name: 'Manu', age: 29},
-  //     {name: 'Stephanie', age: 30} 
-  //   ]})
-  // }
-
   nameChangeHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex(p => {
       return p.id === id;
@@ -42,12 +33,6 @@ class App extends Component {
     persons[personIndex] = person;
 
     this.setState({ persons: persons });
-
-    // this.setState({persons:  [
-    //   {name: 'Nazanin', age: 28},
-    //   {name: event.target.value, age: 29},
-    //   {name: 'Stephanie', age: 30} 
-    // ]})
   }
 
   deletePersonHandler = (personIndex) => {
@@ -63,77 +48,26 @@ class App extends Component {
   }
 
   render() {
-    // const style = {
-    //   backgroundColor: 'white',
-    //   font: 'inherit',
-    //   border: '1px solid blue',
-    //   padding: '8px',
-    //   cursor: 'pointer',
-    //   ':hover': {
-    //     backgroundColor: 'lightgreen',
-    //     color: 'black'
-    //   }
-    // };
 
     let persons = null;
 
     if (this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map((person, index) => {
-            return <ErrorBoundary key={person.id}><Person
-              click={() => this.deletePersonHandler(index)}
-              change={(event) => this.nameChangeHandler(event, person.id)}
-              name={person.name}
-              age={person.age}
-            /></ErrorBoundary>
-          })}
-          {/* <Person // we can use mapping through array instead of it
-            name={this.state.persons[0].name} 
-            age={this.state.persons[0].age}/>
-          <Person 
-            name={this.state.persons[1].name} 
-            age={this.state.persons[1].age}
-            click={this.switchNameHandler.bind(this, 'Ali')}
-            changed={this.nameChangeHandler}>My Hobbies: Racing</Person>
-          <Person 
-            name={this.state.persons[2].name} 
-            age={this.state.persons[2].age}/> */}
+          <Persons persons={this.state.persons} clicked={this.deletePersonHandler}
+            changed={this.nameChangeHandler} />
         </div>
       );
-
-      // style.backgroundColor = 'red'
-      // style[':hover'] = {
-      //   backgroundColor: 'lightred',
-      //   color: 'black'
-      // }
     }
 
     return (
       <StyleRoot>
         <div className={classes.App}>
-          <h1>Hi, I am a React App!</h1>
-          <p>This is really working</p>
-          <button
-            className={classes.Button}
-            onClick={() => this.togglePersonsHandler()}>Switch Name</button>
+          <Cockpit showPersons={this.state.showPersons}
+            persons={this.state.persons}
+            clicked={this.togglePersonsHandler} />
           {persons}
-          {/* {
-          this.state.showPersons === true ?
-            <div>
-              <Person 
-                name={this.state.persons[0].name} 
-                age={this.state.persons[0].age}/>
-              <Person 
-                name={this.state.persons[1].name} 
-                age={this.state.persons[1].age}
-                click={this.switchNameHandler.bind(this, 'Ali')}
-                changed={this.nameChangeHandler}>My Hobbies: Racing</Person>
-              <Person 
-                name={this.state.persons[2].name} 
-                age={this.state.persons[2].age}/>
-            </div> : null
-        } */}
+
         </div>
       </StyleRoot>
     );
