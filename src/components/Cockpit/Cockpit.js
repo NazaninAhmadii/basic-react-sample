@@ -62,7 +62,8 @@ const Cockpit = (props) => {
             <p>This is really working</p>
             <button
                 className={btnClass}
-                onClick={() => props.clicked()}>Switch Name</button>
+                onClick={() => props.clicked()}
+            >Switch Name</button>
         </div>
     )
 }
