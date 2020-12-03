@@ -10,15 +10,43 @@ import Radium, { StyleRoot } from 'radium'
 //**********CLASS BASE COMPONENT **********/
 //*****************************************/ 
 class App extends Component {
-  state = {
+  constructor(props) {
+    super(props)
+    console.log('[App.js] constructor')
+  }
+
+  state = { // it will be add to constructor 
     persons: [
       { id: 1, name: 'Max', age: 28 },
       { id: 2, name: 'Manu', age: 29 },
       { id: 3, name: 'Stephanei', age: 26 }
     ],
     otherState: 'some other value',
-    showPersons: false
+    showPersons: false,
+    showCockpit: true
   }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStateFromProps', props)
+    return state
+  }
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount')
+  }
+
+  componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate')
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate')
+    return true // should return true to allow the component to update
+  }
+
+  // componentWillMount() { // Not safe to use
+  //   console.log('[App.js] componentWillMount')
+  // }
 
   nameChangeHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex(p => {
@@ -48,7 +76,7 @@ class App extends Component {
   }
 
   render() {
-
+    console.log('[App.js] rendering...')
     let persons = null;
 
     if (this.state.showPersons) {
@@ -62,10 +90,12 @@ class App extends Component {
 
     return (
       <StyleRoot>
+
         <div className={classes.App}>
-          <Cockpit showPersons={this.state.showPersons}
-            persons={this.state.persons}
-            clicked={this.togglePersonsHandler} />
+          <button onClick={() => this.setState({ showCockpit: false })}>Remove Cockpit</button>
+          {this.state.showCockpit ? <Cockpit showPersons={this.state.showPersons} persons={this.state.persons}
+            clicked={this.togglePersonsHandler} /> : ''}
+
           {persons}
 
         </div>
