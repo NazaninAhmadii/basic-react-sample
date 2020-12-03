@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import ErrorBoundary from '../../ErrorBoundry/ErrorBoundary'
 import Person from './Person/Person';
 
-class Persons extends Component {
+class Persons extends PureComponent {
 
     // componentWillReceiveProps(props) {
     //     console.log('[Persons.js] componentWillReceiveProps', props)
@@ -13,10 +13,20 @@ class Persons extends Component {
     //     return null
     // }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log('[Persons.js] shouldComponentUpdate')
-        return true
-    }
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     console.log('[Persons.js] shouldComponentUpdate')
+    //     if (nextProps.persons !== this.props.persons || 
+    //         nextProps.changed != this.props.changed || 
+    //         nextProps.clicked != this.props.clicked) {//it compares just the p
+    //         //ointer, because this is an array which will be copy by reference, so this is just shallow comparison, it does not deeply compare it
+    //         //and it works just because in App.js we did this: const person = { ...this.state.persons[personIndex] }; 
+    //         // helps the component to just get rendered when the props has been changed
+    //         return true
+    //     } else {
+    //         return false
+    //     }
+    //     // return true // each time when something changes all the component tree gets render
+    // }
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
         console.log('[Persons.js] getSnapshotBeforeUpdate')

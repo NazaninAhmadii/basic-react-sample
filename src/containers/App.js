@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import classes from './App.css';
 import Cockpit from '../components/Cockpit/Cockpit'
 import Persons from '../components/Persons/Persons'
-import Radium, { StyleRoot } from 'radium'
-
+// import Radium, { StyleRoot } from 'radium'
+import WithWrappClass from '../components/hoc/WithWrappClass'
+import Aux from '../components/hoc/Aux'
 
 //*****************************************/
 //**********CLASS BASE COMPONENT **********/
@@ -89,22 +90,24 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
-
+      // <StyleRoot>
+      <Aux>
         <div className={classes.App}>
           <button onClick={() => this.setState({ showCockpit: false })}>Remove Cockpit</button>
-          {this.state.showCockpit ? <Cockpit showPersons={this.state.showPersons} persons={this.state.persons}
-            clicked={this.togglePersonsHandler} /> : ''}
+          {this.state.showCockpit ?
+            <Cockpit showPersons={this.state.showPersons} personsLength={this.state.persons.length}
+              clicked={this.togglePersonsHandler} /> : ''}
 
           {persons}
 
         </div>
-      </StyleRoot>
+      </Aux>
+      // </StyleRoot>
     );
   }
-
-
 }
+
+export default WithWrappClass(App, classes.App)
 
 
 //*****************************************/
@@ -164,6 +167,7 @@ class App extends Component {
 
 // export default app;
 
-export default Radium(App);
+// export default Radium(App);
+
 
 
