@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import ErrorBoundary from '../../ErrorBoundry/ErrorBoundary'
 import Person from './Person/Person';
 
+
 class Persons extends PureComponent {
 
     // componentWillReceiveProps(props) {
@@ -44,14 +45,20 @@ class Persons extends PureComponent {
 
     render() {
         console.log('[Persons.js] rendering...')
-        return this.props.persons.map((person, index) => {
-            return <ErrorBoundary key={person.id}><Person
-                click={() => this.props.clicked(index)}
-                change={(event) => this.props.changed(event, person.id)}
-                name={person.name}
-                age={person.age}
-            /></ErrorBoundary>
-        }
+        return (
+
+
+            this.props.persons.map((person, index) => {
+                return (<ErrorBoundary key={person.id}><Person
+                    click={() => this.props.clicked(index)}
+                    change={(event) => this.props.changed(event, person.id)}
+                    name={person.name}
+                    age={person.age}
+
+                /></ErrorBoundary>)
+            })
+
+
 
         )
     }

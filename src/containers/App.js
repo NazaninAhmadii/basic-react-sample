@@ -6,6 +6,7 @@ import Persons from '../components/Persons/Persons'
 // import Radium, { StyleRoot } from 'radium'
 import WithWrappClass from '../components/hoc/WithWrappClass'
 import Aux from '../components/hoc/Aux'
+import AuthContext from '../context/auth-context'
 
 //*****************************************/
 //**********CLASS BASE COMPONENT **********/
@@ -84,6 +85,10 @@ class App extends Component {
     this.setState({ showPersons: !doeasShow });// it does the toggle
   }
 
+  loginHandler = () => {
+    this.setState({ authenticated: true })
+  }
+
   render() {
     console.log('[App.js] rendering...')
     let persons = null;
@@ -102,12 +107,17 @@ class App extends Component {
       <Aux>
         <div className={classes.App}>
           <button onClick={() => this.setState({ showCockpit: false })}>Remove Cockpit</button>
-          {this.state.showCockpit ?
-            <Cockpit showPersons={this.state.showPersons} personsLength={this.state.persons.length}
-              clicked={this.togglePersonsHandler} /> : ''}
+          <AuthContext.Provider
+            value={{
+              authenticated: this.state.authenticated,
+              login: this.loginHandler
+            }}>
+            {this.state.showCockpit ?
+              <Cockpit showPersons={this.state.showPersons} personsLength={this.state.persons.length}
+                clicked={this.togglePersonsHandler} /> : ''}
 
-          {persons}
-
+            {persons}
+          </AuthContext.Provider>
         </div>
       </Aux>
       // </StyleRoot>

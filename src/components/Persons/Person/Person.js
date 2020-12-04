@@ -4,7 +4,7 @@ import Radium from 'radium'
 // import Aux from '../../hoc/Aux'
 import WithClass from '../../hoc/WithClass';
 import PropTypes from 'prop-types'
-
+import AuthContext from '../../../context/auth-context'
 
 
 class Person extends Component {
@@ -24,6 +24,9 @@ class Person extends Component {
             // <Aux>
             // <Fragment>
             <WithClass classes={classes.Person}>
+                <AuthContext.Consumer>
+                    {(context) => context.authenticated ? <p>Authenticated!</p> : <p>Please Login</p>}
+                </AuthContext.Consumer>
                 <p onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>
                 <p>{this.props.children}</p>
                 <input
