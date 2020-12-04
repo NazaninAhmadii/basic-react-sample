@@ -89,6 +89,10 @@ class App extends Component {
     this.setState({ authenticated: true })
   }
 
+  handleBind() {
+    console.log('this is: ', this)
+  }
+
   render() {
     console.log('[App.js] rendering...')
     let persons = null;
@@ -106,6 +110,7 @@ class App extends Component {
       // <StyleRoot>
       <Aux>
         <div className={classes.App}>
+          <button onClick={() => this.handleBind()}>Check Bind</button>
           <button onClick={() => this.setState({ showCockpit: false })}>Remove Cockpit</button>
           <AuthContext.Provider
             value={{
