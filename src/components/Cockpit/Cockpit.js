@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import classes from './Cockpit.css'
 
 const Cockpit = (props) => {
+    const toggleBtnRef = useRef(null) // giving access to DOM elements
+
 
     useEffect(() => {
+        toggleBtnRef.current.click()
         console.log('[Cockpit.js] useEffect ')
         // HTTP request...
         return () => { // cleanup in react hook which is componentDidUnmount
@@ -61,6 +64,7 @@ const Cockpit = (props) => {
             <h1>Hi, I am a React App!</h1>
             <p>This is really working</p>
             <button
+                ref={toggleBtnRef}
                 className={btnClass}
                 onClick={() => props.clicked()}
             >Switch Name</button>

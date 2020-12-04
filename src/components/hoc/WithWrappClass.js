@@ -2,9 +2,9 @@ import React from 'react'
 
 
 const withWrappClass = (WrappedComponent, className) => {
-    return props => (
+    return props => (// don't forget to pass props to the component
         <div className={className}>
-            <WrappedComponent />
+            <WrappedComponent {...props} />
         </div>
     )
 }
