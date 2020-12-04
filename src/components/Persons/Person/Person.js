@@ -14,8 +14,12 @@ class Person extends Component {
         this.inputElementRef = React.createRef() // in react 16.3
     }
 
+    //we need to use contextType and it should be static and the name should ne exactlu contextType
+    static contextType = AuthContext // it connects this component to the context
+
     componentDidMount() {
         this.inputElementRef.current.focus()
+        console.log(this.context.authenticated) //access to the context we assigned
     }
 
     render() {
@@ -24,9 +28,10 @@ class Person extends Component {
             // <Aux>
             // <Fragment>
             <WithClass classes={classes.Person}>
-                <AuthContext.Consumer>
+                {/* <AuthContext.Consumer>
                     {(context) => context.authenticated ? <p>Authenticated!</p> : <p>Please Login</p>}
-                </AuthContext.Consumer>
+                </AuthContext.Consumer> */}
+                {this.context.authenticated ? <p>Authenticated</p> : <p>Please login</p>}
                 <p onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>
                 <p>{this.props.children}</p>
                 <input
